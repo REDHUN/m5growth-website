@@ -1031,43 +1031,6 @@ body.menu-open .burger span {
   padding-block: clamp(90px, 12vw, 170px);
 }
 
-.services-pill-banner {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 32px;
-}
-
-.services-pill-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: var(--white);
-  border: 1px solid var(--line);
-  font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-
-.services-pill-tag.highlight {
-  background: #0B0E0D;
-  color: #00E57D;
-  border-color: rgba(0, 229, 125, 0.35);
-  box-shadow: 0 4px 14px rgba(0, 193, 106, 0.15);
-}
-
-.services-pill-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-}
-
 .sec-label-group {
   display: flex;
   align-items: center;

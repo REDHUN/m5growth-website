@@ -15,10 +15,7 @@ import {
   Plus, 
   Minus, 
   ArrowUpRight, 
-  LayoutGrid, 
-  ListFilter,
-  CheckCircle2,
-  Sparkles
+  CheckCircle2
 } from 'lucide-react';
 
 interface ServiceItem {
@@ -186,9 +183,7 @@ const servicesData: ServiceItem[] = [
 ];
 
 export default function Services() {
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [activeCardModal, setActiveCardModal] = useState<ServiceItem | null>(null);
 
   const toggleAccordion = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -207,26 +202,6 @@ export default function Services() {
   return (
     <section className="services" id="services">
       <div className="wrap">
-        {/* Top Badges Banner matching graphic */}
-        <div className="services-pill-banner">
-          <div className="services-pill-tag">
-            <span className="services-pill-dot" />
-            <span>Brands · People · Growth</span>
-          </div>
-          <div className="services-pill-tag highlight">
-            <Sparkles size={13} />
-            <span>Growth Beyond Limits</span>
-          </div>
-          <div className="services-pill-tag">
-            <span className="services-pill-dot" />
-            <span>From Ideas to Impact</span>
-          </div>
-          <div className="services-pill-tag desktop-only">
-            <span className="services-pill-dot" />
-            <span>Growing Brands Globally</span>
-          </div>
-        </div>
-
         {/* Section Header */}
         <header className="sec-head sec-head-grid services-head">
           <div>
@@ -242,158 +217,83 @@ export default function Services() {
             </p>
           </div>
           
-          <div className="services-head-right">
-            <p className="sec-desc">
-              We help businesses grow with creative ideas, data-driven strategies and result-oriented digital solutions.
-            </p>
-            
-            {/* View Switcher Buttons */}
-            <div className="services-view-toggle">
-              <button
-                type="button"
-                className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
-                onClick={() => setViewMode('grid')}
-                aria-label="Grid View"
-                title="Grid View"
-              >
-                <LayoutGrid size={16} />
-                <span>Grid View</span>
-              </button>
-              <button
-                type="button"
-                className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
-                onClick={() => setViewMode('list')}
-                aria-label="List View"
-                title="List View"
-              >
-                <ListFilter size={16} />
-                <span>Detailed List</span>
-              </button>
-            </div>
-          </div>
+          <p className="sec-desc">
+            We help businesses grow with creative ideas, data-driven strategies and result-oriented digital solutions.
+          </p>
         </header>
 
-        {/* GRID VIEW (Interactive visual cards matching the image) */}
-        {viewMode === 'grid' && (
-          <div className="services-grid-10">
-            {servicesData.map((svc) => {
-              const IconComp = svc.icon;
-              return (
-                <div
-                  key={svc.id}
-                  className="svc-card"
-                  onClick={() => setActiveCardModal(svc)}
-                  tabIndex={0}
-                  role="button"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') setActiveCardModal(svc);
-                  }}
-                  aria-label={`View details for ${svc.name}`}
+        {/* LIST / ACCORDION OF ALL 10 SERVICES */}
+        <ul className="svc-list">
+          {servicesData.map((svc, index) => {
+            const isOpen = openIndex === index;
+            const IconComp = svc.icon;
+            return (
+              <li key={svc.id} className={`svc ${isOpen ? 'open' : ''}`}>
+                <button
+                  type="button"
+                  className="svc-row"
+                  aria-expanded={isOpen}
+                  aria-controls={svc.id}
+                  onClick={() => toggleAccordion(index)}
                 >
-                  <div className="svc-card-glow" />
-                  <div className="svc-card-header">
-                    <div className="svc-card-icon-badge">
-                      <IconComp size={22} className="svc-icon" />
+                  <span className="svc-idx">{svc.idx}</span>
+                  <div className="svc-title-group">
+                    <div className="svc-title-icon-wrap">
+                      <IconComp size={20} />
                     </div>
-                    <span className="svc-card-idx">{svc.idx}</span>
-                  </div>
-
-                  <div className="svc-card-content">
-                    <h3 className="svc-card-title">{svc.name}</h3>
-                    <p className="svc-card-tagline">{svc.tagline}</p>
-                    <p className="svc-card-short-desc">{svc.desc}</p>
-                  </div>
-
-                  <div className="svc-card-footer">
-                    <div className="svc-card-tags-mini">
-                      {svc.tags.slice(0, 2).map((tag) => (
-                        <span key={tag} className="tag-pill-mini">{tag}</span>
-                      ))}
+                    <div>
+                      <span className="svc-name display">{svc.name}</span>
+                      <span className="svc-tagline-sub">{svc.tagline}</span>
                     </div>
-                    <div className="svc-card-arrow">
-                      <ArrowUpRight size={16} />
+                  </div>
+                  <span className="svc-hint label">{svc.tags.slice(0, 3).join(' · ')}</span>
+                  <span className="svc-toggle">
+                    {isOpen ? <Minus size={18} /> : <Plus size={18} />}
+                  </span>
+                </button>
+
+                <div className="svc-body" id={svc.id}>
+                  <div className="svc-body-in">
+                    <div className="svc-cont">
+                      <div>
+                        <p className="svc-body-desc">{svc.desc}</p>
+                        <div className="svc-deliverables">
+                          <span className="svc-deliv-title">Core Deliverables:</span>
+                          <ul className="svc-deliv-list">
+                            {svc.deliverables.map((item) => (
+                              <li key={item}>
+                                <CheckCircle2 size={15} className="svc-check-icon" />
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                      <div>
+                        <span className="svc-deliv-title">Capabilities &amp; Channels:</span>
+                        <ul className="svc-tags">
+                          {svc.tags.map((tag) => (
+                            <li key={tag}>{tag}</li>
+                          ))}
+                        </ul>
+                        <div className="svc-action-cta">
+                          <button
+                            type="button"
+                            className="btn btn-accent"
+                            onClick={() => handleContactScroll(svc.name)}
+                          >
+                            <span>Inquire for {svc.name}</span>
+                            <ArrowUpRight size={15} />
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        )}
-
-        {/* LIST / ACCORDION VIEW */}
-        {viewMode === 'list' && (
-          <ul className="svc-list">
-            {servicesData.map((svc, index) => {
-              const isOpen = openIndex === index;
-              const IconComp = svc.icon;
-              return (
-                <li key={svc.id} className={`svc ${isOpen ? 'open' : ''}`}>
-                  <button
-                    type="button"
-                    className="svc-row"
-                    aria-expanded={isOpen}
-                    aria-controls={svc.id}
-                    onClick={() => toggleAccordion(index)}
-                  >
-                    <span className="svc-idx">{svc.idx}</span>
-                    <div className="svc-title-group">
-                      <div className="svc-title-icon-wrap">
-                        <IconComp size={18} />
-                      </div>
-                      <div>
-                        <span className="svc-name display">{svc.name}</span>
-                        <span className="svc-tagline-sub">{svc.tagline}</span>
-                      </div>
-                    </div>
-                    <span className="svc-hint label">{svc.tags.slice(0, 3).join(' · ')}</span>
-                    <span className="svc-toggle">
-                      {isOpen ? <Minus size={18} /> : <Plus size={18} />}
-                    </span>
-                  </button>
-
-                  <div className="svc-body" id={svc.id}>
-                    <div className="svc-body-in">
-                      <div className="svc-cont">
-                        <div>
-                          <p className="svc-body-desc">{svc.desc}</p>
-                          <div className="svc-deliverables">
-                            <span className="svc-deliv-title">Core Deliverables:</span>
-                            <ul className="svc-deliv-list">
-                              {svc.deliverables.map((item) => (
-                                <li key={item}>
-                                  <CheckCircle2 size={15} className="svc-check-icon" />
-                                  <span>{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                        <div>
-                          <span className="svc-deliv-title">Capabilities &amp; Tools:</span>
-                          <ul className="svc-tags">
-                            {svc.tags.map((tag) => (
-                              <li key={tag}>{tag}</li>
-                            ))}
-                          </ul>
-                          <div className="svc-action-cta">
-                            <button
-                              type="button"
-                              className="btn btn-accent"
-                              onClick={() => handleContactScroll(svc.name)}
-                            >
-                              <span>Inquire for {svc.name}</span>
-                              <ArrowUpRight size={15} />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        )}
+              </li>
+            );
+          })}
+        </ul>
 
         {/* Bottom Bar Summary */}
         <div className="services-bottom-cta">
@@ -415,85 +315,6 @@ export default function Services() {
             <ArrowUpRight size={16} />
           </button>
         </div>
-
-        {/* Modal for Service Deep Dive (Grid View Click) */}
-        {activeCardModal && (
-          <div
-            className="svc-modal-backdrop"
-            onClick={() => setActiveCardModal(null)}
-            role="dialog"
-            aria-modal="true"
-          >
-            <div
-              className="svc-modal-content"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="svc-modal-header">
-                <div className="svc-modal-badge">
-                  {(() => {
-                    const ModalIcon = activeCardModal.icon;
-                    return <ModalIcon size={24} />;
-                  })()}
-                </div>
-                <div className="svc-modal-titles">
-                  <div className="svc-modal-idx-row">
-                    <span className="label">Service {activeCardModal.idx}</span>
-                    <span className="svc-modal-tagline-highlight">{activeCardModal.tagline}</span>
-                  </div>
-                  <h3 className="svc-modal-title display">{activeCardModal.name}</h3>
-                </div>
-                <button
-                  type="button"
-                  className="svc-modal-close"
-                  onClick={() => setActiveCardModal(null)}
-                  aria-label="Close modal"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <div className="svc-modal-body">
-                <p className="svc-modal-desc">{activeCardModal.desc}</p>
-
-                <div className="svc-modal-section">
-                  <span className="svc-deliv-title">Key Execution Levers:</span>
-                  <ul className="svc-modal-deliv-list">
-                    {activeCardModal.deliverables.map((item) => (
-                      <li key={item}>
-                        <CheckCircle2 size={16} className="svc-check-icon" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="svc-modal-section">
-                  <span className="svc-deliv-title">Tags &amp; Channels:</span>
-                  <div className="svc-tags">
-                    {activeCardModal.tags.map((tag) => (
-                      <span key={tag} className="tag-item">{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="svc-modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-accent"
-                  style={{ width: '100%', justifyContent: 'center' }}
-                  onClick={() => {
-                    setActiveCardModal(null);
-                    handleContactScroll(activeCardModal.name);
-                  }}
-                >
-                  <span>Start with {activeCardModal.name}</span>
-                  <ArrowUpRight size={16} />
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );
