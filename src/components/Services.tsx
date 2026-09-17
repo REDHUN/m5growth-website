@@ -241,7 +241,7 @@ export default function Services() {
                     <div className="svc-title-icon-wrap">
                       <IconComp size={20} />
                     </div>
-                    <div>
+                    <div className="svc-title-text">
                       <span className="svc-name display">{svc.name}</span>
                       <span className="svc-tagline-sub">{svc.tagline}</span>
                     </div>

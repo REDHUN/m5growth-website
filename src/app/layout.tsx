@@ -80,8 +80,14 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/logo.png',
-    apple: '/logo.png',
+    icon: [
+      { url: '/logo.png', sizes: 'any', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    shortcut: '/logo.png',
+    apple: [
+      { url: '/logo.png', sizes: '180x180', type: 'image/png' },
+    ],
   },
 };
 
@@ -103,6 +109,8 @@ export default function RootLayout({
         priceRange: '$$',
         address: {
           '@type': 'PostalAddress',
+          streetAddress: 'Muhamma',
+          addressLocality: 'Alappuzha',
           addressRegion: 'Kerala',
           addressCountry: 'IN',
         },

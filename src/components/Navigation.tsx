@@ -92,20 +92,6 @@ export default function Navigation() {
             </a>
             <a
               className="nav-link roll-hover"
-              href="#industries"
-              onClick={(e) => handleNavClick(e, '#industries')}
-            >
-              <span data-text="Who We Help">Who We Help</span>
-            </a>
-            <a
-              className="nav-link roll-hover"
-              href="#work"
-              onClick={(e) => handleNavClick(e, '#work')}
-            >
-              <span data-text="Work">Work</span>
-            </a>
-            <a
-              className="nav-link roll-hover"
               href="#contact"
               onClick={(e) => handleNavClick(e, '#contact')}
             >

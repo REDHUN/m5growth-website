@@ -60,9 +60,9 @@ export default function Hero() {
     }
   };
 
-  const handleScrollToWork = (e: React.MouseEvent) => {
+  const handleScrollToServices = (e: React.MouseEvent) => {
     e.preventDefault();
-    const target = document.querySelector('#work');
+    const target = document.querySelector('#services');
     if (!target) return;
     if (window.__lenis) {
       window.__lenis.scrollTo(target as HTMLElement, { offset: -70, duration: 1.2 });
@@ -136,8 +136,8 @@ export default function Hero() {
                 </span>
                 <ArrowUpRight size={16} />
               </a>
-              <a href="#work" onClick={handleScrollToWork} className="btn-ghost">
-                See selected work <ArrowDown size={15} />
+              <a href="#services" onClick={handleScrollToServices} className="btn-ghost">
+                Explore services <ArrowDown size={15} />
               </a>
             </div>
           </div>

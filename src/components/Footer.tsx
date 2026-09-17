@@ -89,16 +89,6 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="#industries" onClick={(e) => handleAnchorClick(e, '#industries')}>
-                Who We Help
-              </Link>
-            </li>
-            <li>
-              <Link href="#work" onClick={(e) => handleAnchorClick(e, '#work')}>
-                Work
-              </Link>
-            </li>
-            <li>
               <Link href="#contact" onClick={(e) => handleAnchorClick(e, '#contact')}>
                 Get In Touch
               </Link>
@@ -151,9 +141,9 @@ export default function Footer() {
         <div className="f-col">
           <span className="label">Headquarters</span>
           <address>
-            Kerala, India
+            Muhamma, Alappuzha
             <br />
-            Kochi · Calicut · Alappuzha
+            Kerala, India
             <br />
             <br />
             Global Client Support

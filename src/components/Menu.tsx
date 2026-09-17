@@ -89,31 +89,11 @@ export default function Menu({ isOpen, onClose, onNavigate }: MenuProps) {
           </a>
           <a
             className="m-item"
-            href="#industries"
-            onClick={(e) => handleLinkClick(e, '#industries')}
-          >
-            <span className="m-in">
-              <span className="m-idx">03</span>
-              <span className="m-txt display">Who We Help</span>
-            </span>
-          </a>
-          <a
-            className="m-item"
-            href="#work"
-            onClick={(e) => handleLinkClick(e, '#work')}
-          >
-            <span className="m-in">
-              <span className="m-idx">04</span>
-              <span className="m-txt display">Work</span>
-            </span>
-          </a>
-          <a
-            className="m-item"
             href="#contact"
             onClick={(e) => handleLinkClick(e, '#contact')}
           >
             <span className="m-in">
-              <span className="m-idx">05</span>
+              <span className="m-idx">03</span>
               <span className="m-txt display">Get In Touch</span>
             </span>
           </a>

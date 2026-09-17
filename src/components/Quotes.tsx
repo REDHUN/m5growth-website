@@ -189,7 +189,7 @@ export default function Quotes() {
   return (
     <section className="quotes" aria-label="Client Testimonials">
       <div className="wrap">
-        <span className="sec-label">04 — Word on the street</span>
+        <span className="sec-label">03 — Word on the street</span>
 
         <div
           className="quote-stage"

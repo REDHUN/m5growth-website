@@ -11,8 +11,6 @@ import Hero from '@/components/Hero';
 import Marquee from '@/components/Marquee';
 import Manifesto from '@/components/Manifesto';
 import Services from '@/components/Services';
-import WhoWeHelp from '@/components/WhoWeHelp';
-import Work from '@/components/Work';
 import Stats from '@/components/Stats';
 import Quotes from '@/components/Quotes';
 import CtaSection from '@/components/CtaSection';
@@ -44,8 +42,6 @@ export default function Home() {
         <Marquee />
         <Manifesto />
         <Services />
-        <WhoWeHelp />
-        <Work onShowToast={handleShowToast} />
         <Stats />
         <Quotes />
         <CtaSection onShowToast={handleShowToast} />

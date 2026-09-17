@@ -1,13 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import CaseStudyModal, { CaseStudyData } from './CaseStudyModal';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const caseStudies: CaseStudyData[] = [
   {
@@ -86,60 +82,6 @@ interface WorkProps {
 
 export default function Work({ onShowToast }: WorkProps) {
   const [activeStudy, setActiveStudy] = useState<CaseStudyData | null>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-
-    const mm = gsap.matchMedia();
-
-    mm.add('(min-width: 900px)', () => {
-      const track = trackRef.current;
-      const section = sectionRef.current;
-      if (!track || !section) return;
-
-      const getAmount = () => track.scrollWidth - window.innerWidth;
-
-      const tween = gsap.to(track, {
-        x: () => -getAmount(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: () => `+=${getAmount()}`,
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      const images = track.querySelectorAll('.work-m-in img');
-      images.forEach((img) => {
-        gsap.fromTo(
-          img,
-          { xPercent: -8 },
-          {
-            xPercent: 8,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: img.closest('.work-item'),
-              containerAnimation: tween,
-              start: 'left right',
-              end: 'right left',
-              scrub: true,
-            },
-          }
-        );
-      });
-    });
-
-    return () => {
-      mm.revert();
-    };
-  }, []);
 
   const handleStudyClick = (study: CaseStudyData) => {
     setActiveStudy(study);
@@ -161,23 +103,23 @@ export default function Work({ onShowToast }: WorkProps) {
 
   return (
     <>
-      <section className="work" id="work" ref={sectionRef}>
-        <div className="work-pinned">
+      <section className="work" id="work">
+        <div className="wrap work-container">
           <div className="work-head">
             <div>
               <span className="sec-label">03 — Selected work</span>
-              <h2 className="work-title display" style={{ marginTop: '22px' }}>
+              <h2 className="work-title display" style={{ marginTop: '16px' }}>
                 Proof, not promises
               </h2>
             </div>
-            <span className="work-count label">( 04 )</span>
+            <span className="work-count label">( 04 Featured Cases )</span>
           </div>
 
-          <div className="work-track" ref={trackRef}>
+          <div className="work-grid">
             {caseStudies.map((item) => (
               <article
                 key={item.id}
-                className="work-item"
+                className="work-card"
                 data-cursor="view"
                 tabIndex={0}
                 onClick={() => handleStudyClick(item)}
@@ -186,13 +128,6 @@ export default function Work({ onShowToast }: WorkProps) {
                 }}
                 aria-label={`View ${item.title} case study`}
               >
-                <div className="work-top">
-                  <span className="label">{item.idx}</span>
-                  <span className="label">
-                    {item.category} · {item.year}
-                  </span>
-                </div>
-
                 <div className="work-media">
                   <div className="work-m-in">
                     <Image
@@ -203,25 +138,52 @@ export default function Work({ onShowToast }: WorkProps) {
                       unoptimized
                     />
                   </div>
+                  <div className="work-media-overlay">
+                    <span className="work-view-badge">
+                      <span>Explore Case Study</span>
+                      <ArrowUpRight size={14} />
+                    </span>
+                  </div>
                 </div>
 
-                <h3 className="work-name display">{item.title}</h3>
-                <span className="work-res label">{item.headlineResult}</span>
+                <div className="work-info">
+                  <div className="work-top">
+                    <span className="work-idx-pill">{item.idx}</span>
+                    <span className="label">
+                      {item.category} · {item.year}
+                    </span>
+                  </div>
+
+                  <h3 className="work-name display">{item.title}</h3>
+                  <span className="work-res">{item.headlineResult}</span>
+
+                  <div className="work-tags-row">
+                    {item.services.map((svc) => (
+                      <span key={svc} className="work-tag-mini">{svc}</span>
+                    ))}
+                  </div>
+                </div>
               </article>
             ))}
+          </div>
 
-            <div className="work-end">
-              <p className="display">
+          <div className="work-cta-banner">
+            <div className="work-cta-content">
+              <span className="sec-label">Your Next Milestone</span>
+              <p className="display work-cta-title">
                 Your brand, <em>next.</em>
               </p>
-              <a href="#contact" className="btn btn-accent">
-                <span className="roll">
-                  <span>Start a project</span>
-                  <span>Start a project</span>
-                </span>
-                <ArrowUpRight size={16} />
-              </a>
+              <p className="work-cta-desc">
+                Partner with our studio to scale acquisition, search rankings, and brand equity.
+              </p>
             </div>
+            <a href="#contact" className="btn btn-black">
+              <span className="roll">
+                <span>Start a project</span>
+                <span>Start a project</span>
+              </span>
+              <ArrowUpRight size={16} />
+            </a>
           </div>
         </div>
       </section>
